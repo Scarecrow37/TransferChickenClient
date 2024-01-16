@@ -3,11 +3,11 @@
 
 class TcpSocket;
 
-class TCPClient
+class TcpClient
 {
 public:
-    TCPClient();
-    ~TCPClient();
+    TcpClient();
+    ~TcpClient();
 
     TcpSocket* Connect(const char* Address, u_short Port) const;
 };

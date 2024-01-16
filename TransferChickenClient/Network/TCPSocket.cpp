@@ -48,9 +48,12 @@ void TcpSocket::SendFile(FILE* File) const
     }
 }
 
-FILE* TcpSocket::ReceiveFile() const
+char* TcpSocket::ReceiveFile() const
 {
-    return nullptr;
+    char Buffer[20000] = {};
+    const int Byte = recv(Socket, Buffer, sizeof(Buffer), 0);
+
+    return Buffer;
 }
 
 std::exception TcpSocket::MakeException(const std::string& Message)
@@ -62,4 +65,11 @@ std::exception TcpSocket::MakeException(const std::string& Message)
     ExceptionMessage.append("] ");
     ExceptionMessage.append(Message);
     return std::exception(ExceptionMessage.c_str());
+}
+
+int TcpSocket::Receive(char* Buffer) const
+{
+    const int Byte = recv(Socket, Buffer, sizeof(Buffer), 0);
+
+    return Byte;
 }

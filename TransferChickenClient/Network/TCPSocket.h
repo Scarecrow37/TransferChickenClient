@@ -9,11 +9,13 @@ public:
 
     static std::exception MakeException(const std::string& Message);
 
+    int Receive(char* Buffer) const;
+
     void SendString(const std::string& Message) const;
     std::string ReceiveString() const;
 
     void SendFile(FILE* File) const;
-    FILE* ReceiveFile() const;
+    char* ReceiveFile() const;
 
 private:
     SOCKET Socket;

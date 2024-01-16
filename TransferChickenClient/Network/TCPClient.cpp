@@ -6,7 +6,7 @@
 
 #pragma comment(lib, "ws2_32")
 
-TCPClient::TCPClient()
+TcpClient::TcpClient()
 {
     WSAData WsaData;
     const int Result = WSAStartup(MAKEWORD(2, 2), &WsaData);
@@ -16,12 +16,12 @@ TCPClient::TCPClient()
     }
 }
 
-TCPClient::~TCPClient()
+TcpClient::~TcpClient()
 {
     WSACleanup();
 }
 
-TcpSocket* TCPClient::Connect(const char* Address, const u_short Port) const
+TcpSocket* TcpClient::Connect(const char* Address, const u_short Port) const
 {
     const SOCKET Server = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP);
     if (Server == INVALID_SOCKET)
