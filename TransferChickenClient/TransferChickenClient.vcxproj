@@ -154,15 +154,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Network\TCPClient.cpp" />
-    <ClCompile Include="Network\TCPServer.cpp" />
-    <ClCompile Include="Network\TCPSocket.cpp" />
     <ClCompile Include="TransferChickenClient.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Network\TCPClient.h" />
-    <ClInclude Include="Network\TCPServer.h" />
-    <ClInclude Include="Network\TCPSocket.h" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resource\" />

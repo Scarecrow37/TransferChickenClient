@@ -1,31 +1,37 @@
-
 #define _CRT_SECURE_NO_WARNINGS
+#define _WINSOCK_DEPRECATED_NO_WARNINGS
+        
 #include <iostream>
+#include <WinSock2.h>
 
-#include "Network/TCPClient.h"
-#include "Network/TCPSocket.h"
+#pragma comment(lib, "ws2_32")
 
-int main(int argc, char* argv[])
+
+int main()
 {
-    const TcpClient* Client = new TcpClient();
-    const TcpSocket* Socket = Client->Connect("127.0.0.1", 8080);
+    SOCKET ServerSocket = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP);
+    SOCKADDR_IN ServerAddress = {};
+    ServerAddress.sin_family = AF_INET;
+    ServerAddress.sin_addr.s_addr = inet_addr("127.0.0.1");
+    ServerAddress.sin_port = htons(8080);
+    connect(ServerSocket, reinterpret_cast<SOCKADDR*>(&ServerAddress), sizeof(ServerAddress));
     char Buffer[100000] = {};
     int Size = 0;
     while (true)
     {
         char TempBuffer[1024] = {};
-        int BufferSize = Socket->Receive(TempBuffer);
-        if (BufferSize <= 0)
+        int ReceiveByte = recv(ServerSocket, TempBuffer, sizeof(TempBuffer), 0);
+        if (ReceiveByte <= 0)
         {
             break;
         }
-        memcpy(&Buffer[Size], TempBuffer, BufferSize);
-        Size += BufferSize;
+        memcpy(&Buffer[Size], TempBuffer, ReceiveByte);
+        Size += ReceiveByte;
     }
-    std::cout << Size;
-    FILE* File = fopen("C:/Work/Resource/chicken2.jpg", "wb");
-    const int Result = fwrite(Buffer, sizeof(char), Size, File);
-    fclose(File);
-
+    FILE* ChickenImage = {};
+    fopen_s(&ChickenImage, "./Resource/chicken.jpg", "wb");
+    fwrite(Buffer, sizeof(char), Size, ChickenImage);
+    fclose(ChickenImage);
+    WSACleanup();
     return 0;
 }
