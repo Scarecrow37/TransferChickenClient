@@ -9,6 +9,8 @@
 
 int main()
 {
+    WSAData WsaData;
+    WSAStartup(MAKEWORD(2,2), &WsaData);
     SOCKET ServerSocket = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP);
     SOCKADDR_IN ServerAddress = {};
     ServerAddress.sin_family = AF_INET;
